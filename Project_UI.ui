@@ -166,15 +166,59 @@
     <string>Sort</string>
    </property>
   </widget>
-  <widget class="QTableView" name="tableView">
+  <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>180</y>
-     <width>851</width>
-     <height>361</height>
+     <x>80</x>
+     <y>190</y>
+     <width>721</width>
+     <height>321</height>
     </rect>
    </property>
+   <property name="rowCount">
+    <number>3</number>
+   </property>
+   <property name="columnCount">
+    <number>7</number>
+   </property>
+   <row/>
+   <row/>
+   <row/>
+   <column>
+    <property name="text">
+     <string>Name</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Location</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Charges</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>No of Rooms</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>No of Beds</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Ratings</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Reviews</string>
+    </property>
+   </column>
   </widget>
  </widget>
  <resources/>
