@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>882</width>
+    <width>801</width>
     <height>565</height>
    </rect>
   </property>
@@ -154,8 +154,8 @@
   <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>190</y>
+     <x>40</x>
+     <y>180</y>
      <width>721</width>
      <height>321</height>
     </rect>
@@ -164,7 +164,7 @@
     <number>3</number>
    </property>
    <property name="columnCount">
-    <number>7</number>
+    <number>6</number>
    </property>
    <row/>
    <row/>
@@ -191,11 +191,6 @@
    </column>
    <column>
     <property name="text">
-     <string>No of Beds</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
      <string>Ratings</string>
     </property>
    </column>
@@ -213,6 +208,19 @@
      <width>104</width>
      <height>21</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="loadBtn">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>140</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Load Data</string>
    </property>
   </widget>
  </widget>
