@@ -137,7 +137,27 @@ class Ui_Dialog(object):
 
         self.tableWidget.resizeColumnsToContents()
         self.tableWidget.resizeRowsToContents()
+    def array(self):
+        Hotel_name=[]
+        Address=[]
+        Reviews=[]
+        Charges=[]
+        Rooms=[]
+        Ratings=[]
+        with open('Hotels2.csv', mode='r', enconding='utf-8')as file:
+            csvFile=csv.reader(file)
+            for line in csvFile:
+                Hotel_name.oppend(line[0])
+                Reviews.oppend(line[1])
+                Charges.oppend(line[2])
+                Rooms.oppend(line[3])
+                Ratings.oppend(line[4])
+            
 
+
+
+
+        
 
 if __name__ == "__main__":
     import sys
