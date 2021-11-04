@@ -10,11 +10,8 @@
 
 from os import error
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTime, QMetaObject, QObject, QPoint, QRect, QSize, QTime, QUrl, Qt, QEvent)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
-from PySide2.QtWidgets import *
 import pandas as pd
+import csv
 
 
 class Ui_Dialog(object):
@@ -24,6 +21,7 @@ class Ui_Dialog(object):
         self.textEdit = QtWidgets.QTextEdit(Dialog)
         self.textEdit.setGeometry(QtCore.QRect(123, 100, 161, 21))
         self.textEdit.setObjectName("textEdit")
+
         self.comboBox_2 = QtWidgets.QComboBox(Dialog)
         self.comboBox_2.setGeometry(QtCore.QRect(550, 130, 151, 22))
         self.comboBox_2.setObjectName("comboBox_2")
@@ -109,6 +107,12 @@ class Ui_Dialog(object):
         self.label.setText(_translate("Dialog", "HOTEL ANALYTICS"))
         self.pushButton.setText(_translate("Dialog", "Search"))
         self.pushButton_2.setText(_translate("Dialog", "Sort"))
+
+        # Event for Sort on Sort Button
+        self.pushButton_2.clicked.connect(self.Sort)
+
+
+
         # item = self.tableWidget.horizontalHeaderItem(0)
         # item.setText(_translate("Dialog", "Name"))
         # item = self.tableWidget.horizontalHeaderItem(1)
@@ -122,21 +126,177 @@ class Ui_Dialog(object):
         # item = self.tableWidget.horizontalHeaderItem(5)
         # item.setText(_translate("Dialog", "Reviews"))
         self.loadBtn.setText(_translate("Dialog", "Load Data"))
-    def loadData(self):
-        try:
-                self.all_data = pd.read_csv('Hotels2.csv')
-        except error:
-                print(error)
-        NumRows = len(self.all_data.index)
-        self.tableWidget.setColumnCount(len(self.all_data.columns))
-        self.tableWidget.setRowCount(NumRows)
-        self.tableWidget.setHorizontalHeaderLabels(self.all_data.columns)
-        for i in range(NumRows):
-                for j in range(len(self.all_data.columns)):
-                        self.tableWidget.setItem(i, j, QTableWidgetItem(str(self.all_data.iat[i, j])))
 
-        self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.resizeRowsToContents()
+
+    #  Sort Function
+    def Sort(self):
+
+        columnName = self.textEdit.toPlainText()
+        if columnName!= "":
+            Array = []
+            size = self.tableWidget.rowCount()
+
+
+
+
+
+
+            if columnName == "Hotel Name":
+                for i in range(size):
+                    column = 0
+                    Array.append(self.tableWidget.model().index(i,column).data())
+                mergeSortString(Array)
+            elif columnName == "Address":
+                for i in range(size):
+                    column = 1
+                    Array.append(self.tableWidget.model().index(i,column).data())
+                mergeSortString(Array)
+            elif columnName == "Reviews":
+                for i in range(size):
+                    column  =2
+                    data = self.tableWidget.model().index(i,column).data()
+                    if data != None:
+                        data = data[:len(data)-8]
+                        data = (data.replace(',',''))
+                    else :
+                        data = 0
+                    
+                    Array.append(self.tableWidget.model().index(i,column).data())
+
+                mergeSort(Array)
+            elif columnName == "Charges":
+                for i in range(size):
+                    column = 3
+                    Array.append(self.tableWidget.model().index(i,column).data())
+                mergeSort(Array)
+            elif columnName == "Rooms":
+                for i in range(size):
+                    column = 4
+                    Array.append(self.tableWidget.model().index(i,column).data())
+                mergeSortString(Array)
+            elif columnName == "Beds":
+                for i in range(size):
+                    column = 5
+                    Array.append(self.tableWidget.model().index(i,column).data())
+                mergeSort(Array)
+            elif columnName == "Ratings":
+                for i in range(size):
+                    column = 6
+                    Array.append(self.tableWidget.model().index(i,column).data())
+                mergeSort(Array)
+            for i in range(len(Array)):
+                self.tableWidget.setItem(i,column,QtWidgets.QTableWidgetItem(Array[i]))
+
+
+
+        
+    def loadData(self):
+        df = pd.read_csv("Product_more.csv")
+        print(len(df["Hotel Name"]))
+        self.tableWidget.setRowCount(len(df["Hotel Name"]))
+        self.tableWidget.setColumnCount(7)
+        self.tableWidget.setHorizontalHeaderLabels(['Hotel Name','Address','Reviews','Charges','Rooms','Beds','Ratings'])
+        for i in range(len(df)):
+            self.tableWidget.setItem(i,0,QtWidgets.QTableWidgetItem(str(df["Hotel Name"][i])))
+            self.tableWidget.setItem(i,1,QtWidgets.QTableWidgetItem(str(df["Address"][i])))
+            self.tableWidget.setItem(i,2,QtWidgets.QTableWidgetItem(str(df["Reviews"][i])))
+            self.tableWidget.setItem(i,3,QtWidgets.QTableWidgetItem(str(df["Charges"][i])))
+            self.tableWidget.setItem(i,4,QtWidgets.QTableWidgetItem(str(df["Rooms"][i])))
+            self.tableWidget.setItem(i,5,QtWidgets.QTableWidgetItem(str(df["Beds"][i])))
+            self.tableWidget.setItem(i,6,QtWidgets.QTableWidgetItem(str(df["Ratings"][i])))
+
+
+        # try:
+                # all_data = open('Hotels2.csv','r')
+                # print(all_data[0].__sizeof__())
+                # self.tableWidget.setRowCount(len)
+                # for i in all_data:
+                #     Array = i.split(',')
+                #     print(Array[0])
+
+        # except error:
+        #         print(error)
+        # NumRows = len(all_data.index)
+        # self.tableWidget.setColumnCount(len(all_data.columns))
+        # self.tableWidget.setRowCount(NumRows)
+        # self.tableWidget.setHorizontalHeaderLabels(all_data.columns)
+        # for i in range(NumRows):
+        #         for j in range(len(all_data.columns)):
+        #                 self.tableWidget.setItem(i, j, QTableWidgetItem(str(all_data.iat[i, j])))
+
+        # self.tableWidget.resizeColumnsToContents()
+        # self.tableWidget.resizeRowsToContents()
+
+
+        #  Sorting Algorithms
+    
+    #MergeSort
+def mergeSortString(Arr):
+    m=len(Arr)
+    if len(Arr)>1:
+        r=int(len(Arr)/2)
+        Left=Arr[:r]
+        Right=Arr[r:]
+        mergeSortString(Left)
+        mergeSortString(Right)
+        i=0
+        j=0
+        k=0
+        while (i<len(Left) and j<len(Right)):
+            if Left[i][0]<Right[j][0]:
+                Arr[k]=Left[i]
+                i=i+1
+                k=k+1
+            else:
+                Arr[k]=Right[j]
+                j=j+1
+                k=k+1
+        while i<len(Left):
+            Arr[k]=Left[i]
+            i=i+1
+            k=k+1
+        while j<len(Right):
+            Arr[k]=Right[j]
+            j=j+1
+            k=k+1
+    
+
+    #MergeSort
+def mergeSort(Arr):
+    m=len(Arr)
+    if len(Arr)>1:
+        r=int(len(Arr)/2)
+        Left=Arr[:r]
+        Right=Arr[r:]
+        mergeSort(Left)
+        mergeSort(Right)
+        i=0
+        j=0
+        k=0
+        while (i<len(Left) and j<len(Right)):
+            if Left[i]< Right[j] :
+                Arr[k]=Left[i]
+                i=i+1
+                k=k+1
+            else:
+                Arr[k]=Right[j]
+                j=j+1
+                k=k+1
+        while i<len(Left):
+            Arr[k]=Left[i]
+            i=i+1
+            k=k+1
+        while j<len(Right):
+            Arr[k]=Right[j]
+            j=j+1
+            k=k+1
+            
+
+
+
+
+
+
         
     def array(self):
         Hotel_name=[]
