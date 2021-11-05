@@ -191,18 +191,17 @@ class Ui_Dialog(object):
 
         
     def loadData(self):
-        df = pd.read_csv("Product_more.csv")
+        df = pd.read_csv("Hotels2.csv")
         print(len(df["Hotel Name"]))
         self.tableWidget.setRowCount(len(df["Hotel Name"]))
         self.tableWidget.setColumnCount(7)
-        self.tableWidget.setHorizontalHeaderLabels(['Hotel Name','Address','Reviews','Charges','Rooms','Beds','Ratings'])
+        self.tableWidget.setHorizontalHeaderLabels(['Hotel Name','Address','Reviews','Charges','Rooms','Ratings'])
         for i in range(len(df)):
             self.tableWidget.setItem(i,0,QtWidgets.QTableWidgetItem(str(df["Hotel Name"][i])))
             self.tableWidget.setItem(i,1,QtWidgets.QTableWidgetItem(str(df["Address"][i])))
             self.tableWidget.setItem(i,2,QtWidgets.QTableWidgetItem(str(df["Reviews"][i])))
             self.tableWidget.setItem(i,3,QtWidgets.QTableWidgetItem(str(df["Charges"][i])))
             self.tableWidget.setItem(i,4,QtWidgets.QTableWidgetItem(str(df["Rooms"][i])))
-            self.tableWidget.setItem(i,5,QtWidgets.QTableWidgetItem(str(df["Beds"][i])))
             self.tableWidget.setItem(i,6,QtWidgets.QTableWidgetItem(str(df["Ratings"][i])))
 
 
