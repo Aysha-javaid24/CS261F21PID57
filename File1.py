@@ -135,12 +135,6 @@ class Ui_Dialog(object):
         if columnName!= "":
             Array = []
             size = self.tableWidget.rowCount()
-
-
-
-
-
-
             if columnName == "Hotel Name":
                 for i in range(size):
                     column = 0
@@ -194,7 +188,7 @@ class Ui_Dialog(object):
         df = pd.read_csv("Hotels2.csv")
         print(len(df["Hotel Name"]))
         self.tableWidget.setRowCount(len(df["Hotel Name"]))
-        self.tableWidget.setColumnCount(7)
+        self.tableWidget.setColumnCount(6)
         self.tableWidget.setHorizontalHeaderLabels(['Hotel Name','Address','Reviews','Charges','Rooms','Ratings'])
         for i in range(len(df)):
             self.tableWidget.setItem(i,0,QtWidgets.QTableWidgetItem(str(df["Hotel Name"][i])))
@@ -202,29 +196,7 @@ class Ui_Dialog(object):
             self.tableWidget.setItem(i,2,QtWidgets.QTableWidgetItem(str(df["Reviews"][i])))
             self.tableWidget.setItem(i,3,QtWidgets.QTableWidgetItem(str(df["Charges"][i])))
             self.tableWidget.setItem(i,4,QtWidgets.QTableWidgetItem(str(df["Rooms"][i])))
-            self.tableWidget.setItem(i,6,QtWidgets.QTableWidgetItem(str(df["Ratings"][i])))
-
-
-        # try:
-                # all_data = open('Hotels2.csv','r')
-                # print(all_data[0].__sizeof__())
-                # self.tableWidget.setRowCount(len)
-                # for i in all_data:
-                #     Array = i.split(',')
-                #     print(Array[0])
-
-        # except error:
-        #         print(error)
-        # NumRows = len(all_data.index)
-        # self.tableWidget.setColumnCount(len(all_data.columns))
-        # self.tableWidget.setRowCount(NumRows)
-        # self.tableWidget.setHorizontalHeaderLabels(all_data.columns)
-        # for i in range(NumRows):
-        #         for j in range(len(all_data.columns)):
-        #                 self.tableWidget.setItem(i, j, QTableWidgetItem(str(all_data.iat[i, j])))
-
-        # self.tableWidget.resizeColumnsToContents()
-        # self.tableWidget.resizeRowsToContents()
+            self.tableWidget.setItem(i,5,QtWidgets.QTableWidgetItem(str(df["Ratings"][i])))
 
 
         #  Sorting Algorithms
@@ -290,8 +262,45 @@ def mergeSort(Arr):
             j=j+1
             k=k+1
             
+            
+    #Insertion Sort
+def insertionSort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i-1
+        while j >= 0 and key < arr[j] :
+                arr[j + 1] = arr[j]
+                j -= 1
+        arr[j + 1] = key
+        
+        
+      #Bubble Sort
+def BubbleSort(arr):
+    n=len(arr)
+    for i in range(0,n):
+        for j in range(0,n-1):
+            if (arr[j]<arr[j+1]):
+                temp=arr[j]
+                arr[j]=arr[j+1]
+                arr[j+1]=temp
+    return arr
 
 
+     #Counting Sort
+def Count_Sort(A):
+    n=len(A)
+    C=[0]*10
+    Res=[0]*n
+    for i in range(0,n):
+        C[A[i]]=C[A[i]]+1
+    for i in range(1,10):
+        C[i]=C[i]+C[i-1]
+    i=n-1
+    while i>=0:
+        Res[C[A[i]]-1]=A[i]
+        C[A[i]] -=1
+        i=i-1
+    return Res
 
 
 
